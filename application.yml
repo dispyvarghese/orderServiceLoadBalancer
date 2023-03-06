@@ -1,0 +1,11 @@
+server:
+   port: 6502
+eureka:
+   client:
+      serviceUrl:
+         defaultZone: http://localhost:8761/eureka/ 
+   instance:
+      appName:OrderServiceLoadBalancer
+spring:
+   application:
+      name: OrderServiceLoadBalancer
