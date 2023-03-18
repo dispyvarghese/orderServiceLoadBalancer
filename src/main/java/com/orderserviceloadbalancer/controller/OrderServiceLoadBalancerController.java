@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @RestController
 public class OrderServiceLoadBalancerController {
 
@@ -18,6 +21,7 @@ public class OrderServiceLoadBalancerController {
 	@Autowired
 	RestTemplate restTemplate;
 	
+	@CircuitBreaker(name="backup",fallbackMethod = "fallBackForGetOrders")
 	@GetMapping("/orders")
 	public String getOrders() {
 		
@@ -32,6 +36,11 @@ public class OrderServiceLoadBalancerController {
 		String response = restTemplate.getForObject(url, String.class);
 		
 		return response;
+		
+	}
+	
+	public String fallBackForGetOrders(CallNotPermittedException ex) {
+		return "response from fallBack method";
 		
 	}
 }

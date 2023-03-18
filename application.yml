@@ -9,3 +9,13 @@ eureka:
 spring:
    application:
       name: OrderServiceLoadBalancer
+resilience4j:
+   circuitbreaker:
+      configs:
+        default:
+            slidingWindowSize: 10
+            permittedNumberOfCallsInHalfOpenState: 10
+            waitDurationInOpenState: 5s
+            slidingWindowType: COUNT_BASED
+            failureRateThreshold: 50
+            minimumNumberOfCalls: 5
