@@ -19,3 +19,8 @@ resilience4j:
             slidingWindowType: COUNT_BASED
             failureRateThreshold: 50
             minimumNumberOfCalls: 5
+management:
+   endpoints:
+      web:
+         exposure:
+            include: '*'
